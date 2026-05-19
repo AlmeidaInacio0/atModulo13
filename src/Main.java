@@ -18,22 +18,33 @@ public class Main {
         Aluno [] alunos = new Aluno [conteAluno];
 
         for (int i = 0; i < conteAluno; i ++){
-            System.out.println("DFigite o nome do aluno: " + (i + 1));
+            System.out.println("Digite o nome do aluno: " + (i + 1));
             String nome = scanner.nextLine();
 
             double[] notas = new double[conteProvas];
             double soma = 0;
 
-            for (int j = 0; j <conteProvas; j++){
-                System.out.println("Gigite a nota da prova: " + (j + 1));
-                notas[j] = scanner.nextDouble();
+            for (int j = 0; j < conteProvas; j++) {
+                while (true) {
+                    System.out.println("Digite a nota da prova " + (j + 1) + ": ");
+                    notas[j] = scanner.nextDouble();
 
-                soma += notas[j];
+                    if (notas[j] >= 0 && notas[j] <= 10) {
+                        soma += notas[j];
+                        break; // sai do while se a nota for válida
+                    } else {
+                        System.out.println("Nota inválida! Digite uma nota entre 0 e 10.");
+                    }
+                }
             }
             scanner.nextLine();
 
-
-            alunos[i] = new Aluno(nome, notas, soma);
+            try {
+                alunos[i] = new Aluno(nome, notas, soma);
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+                i--;
+            }
         }
 
     }
